@@ -1,0 +1,20 @@
+{
+  "report_settings": {
+    "template_file": "2025년도 주간보고 양식_2.xlsx",
+    "output_format": "xlsx",
+    "backup_enabled": true,
+    "max_backup_files": 10
+  },
+  "data_sources": {
+    "sales_data_dir": "data/sales_raw_data",
+    "receivables_data_dir": "data/receivable_calculator_raw_data",
+    "processed_data_dir": "data/processed",
+    "report_output_dir": "data/report"
+  },
+  "automation_settings": {
+    "browser_headless": true,
+    "download_timeout": 30,
+    "retry_attempts": 3,
+    "delay_between_downloads": 2
+  }
+}
