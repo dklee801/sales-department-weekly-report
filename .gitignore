@@ -1,4 +1,25 @@
-# Python
+# Sales Department Weekly Report System - .gitignore
+
+# 실제 데이터 파일들 (보안상 제외)
+data/raw/**/*.xlsx
+data/raw/**/*.xls
+data/processed/**/*.xlsx
+data/processed/**/*.xls
+data/report/**/*.xlsx
+data/report/**/*.xls
+
+# 설정 파일들 (계정 정보 포함)
+config/accounts.json
+config/settings.json
+*.env
+.env.*
+
+# 로그 파일들
+*.log
+logs/
+*.log.*
+
+# Python 관련
 __pycache__/
 *.py[cod]
 *$py.class
@@ -16,27 +37,52 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-PIPFILE.lock
+MANIFEST
 
-# Virtual Environment
-venv/
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+.env
+.venv
 env/
+venv/
 ENV/
 env.bak/
 venv.bak/
 
-# IDE
+# IDE 설정 파일들
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS 생성 파일들
 .DS_Store
 .DS_Store?
 ._*
@@ -45,33 +91,47 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Project specific
-data/processed/backup/
-data/sales_raw_data/
-data/receivable_calculator_raw_data/
-data/downloads/
-data/report/
-*.xlsx
-*.xls
-
-# Logs
-*.log
-logs/
-
-# Config files with sensitive data
-config/accounts.json
-
-# Temporary files
+# 임시 파일들
 temp/
 tmp/
 *.tmp
-
-# Browser automation
-webdriver/
-chrome_driver/
-geckodriver/
-
-# Backup files
-*_backup*
-*_bak*
+*.temp
+*.bak
 *.backup
+
+# 브라우저 캐시/드라이버
+chromedriver*
+geckodriver*
+msedgedriver*
+*.crx
+
+# Excel 임시 파일들
+~$*.xlsx
+~$*.xls
+*.xlsm
+*.xlsb
+
+# 압축 파일들
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# 사용자 정의 임시 파일들
+debug_*
+test_*
+sample_*
+
+# 예외: 템플릿 파일은 포함
+!2025년도\ 주간보고\ 양식_2.xlsx
+!판매_담당자목록.xlsx
+
+# 예외: 샘플 데이터 디렉토리 구조는 유지
+!data/
+!data/raw/
+!data/processed/
+!data/report/
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/report/.gitkeep
