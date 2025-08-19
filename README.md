@@ -1,190 +1,220 @@
-# Sales Department 주간보고서 자동화 시스템 v4.0
+# Sales Department Weekly Report System
 
-## 🎉 리팩토링 완료!
+**주간보고서 자동화 시스템 v4.0 (리팩토링 완료)**
 
-**sales-department-weekly-report**는 기존 Sales_department 프로젝트를 완전히 리팩토링한 버전입니다.
+매출부서 주간보고서 생성을 위한 완전 자동화 시스템입니다. 매출 데이터 수집부터 매출채권 분석, 최종 보고서 생성까지 전 과정을 자동화합니다.
 
-### 📋 주요 개선사항
+## 🚀 **주요 기능**
 
-#### 🏗️ 모듈화된 구조
-- **명확한 책임 분리**: 각 모듈이 고유한 역할을 담당
-- **유지보수성 향상**: 코드 수정 시 영향 범위가 제한됨
-- **재사용성 증대**: 모듈 간 독립성으로 다른 프로젝트에서도 활용 가능
+### 📊 **매출 데이터 처리**
+- **자동 수집**: ERP 시스템에서 매출 데이터 자동 추출 (1-24개월)
+- **다중 회사 지원**: 디앤드디, 디앤아이, 후지리프트코리아
+- **지능형 집계**: 월별/주차별 자동 집계 및 비교 분석
+- **데이터 검증**: 자동 오류 검출 및 수정
 
-#### 📁 새로운 디렉토리 구조
+### 💰 **매출채권 분석**
+- **주간 기준 분석**: 선택된 목요일 기준 주간 분석
+- **전주 대비 변화**: 90일 초과 채권, 결제기간 초과 채권 증감률
+- **TOP20 분석**: 결제기간 초과 채권 상위 거래처 분석
+- **자동 동기화**: 분석 결과를 보고서 양식에 자동 반영
+
+### 📋 **보고서 생성**
+- **표준 양식 준수**: 2025년도 주간보고 양식_2.xlsx 호환
+- **병합 셀 처리**: Excel 병합 셀 안전 처리
+- **자동 데이터 통합**: 매출 + 매출채권 데이터 통합
+- **XML 안전성**: 특수문자 및 대용량 데이터 안전 처리
+
+## 🏗️ **시스템 아키텍처 (리팩토링 완료)**
+
 ```
-sales-department-weekly-report/
-├── applications/              # 실행 가능한 애플리케이션들
-│   ├── main.py               # CLI 인터페이스
-│   ├── gui.py                # GUI 애플리케이션
+📁 sales-department-weekly-report/
+├── 📁 applications/           # 실행 파일들
+│   ├── main.py               # CLI 메인 실행
+│   ├── gui.py                # GUI 실행
 │   └── run_gui.py            # GUI 런처
-├── modules/                   # 핵심 모듈들
-│   ├── core/                 # 핵심 분석 로직
-│   │   ├── sales_calculator.py
-│   │   └── accounts_receivable_analyzer.py
-│   ├── data/                 # 데이터 처리
-│   │   ├── collectors/       # 데이터 수집기들
-│   │   ├── processors/       # 데이터 가공기들
-│   │   ├── validators/       # 데이터 검증기들
-│   │   └── unified_data_collector.py
-│   ├── gui/                  # GUI 컴포넌트들
-│   │   ├── components/       # 재사용 가능한 UI 컴포넌트
-│   │   └── login_dialog.py
-│   ├── utils/                # 유틸리티 모듈들
-│   │   ├── config_manager.py
-│   │   ├── backup_manager.py
-│   │   └── excel_safety_helper.py
-│   └── reports/              # 보고서 생성 모듈들
-│       └── xml_safe_report_generator.py
-└── test_integration.py       # 통합 테스트 스크립트
+├── 📁 modules/               # 핵심 모듈들
+│   ├── 📁 core/              # 핵심 비즈니스 로직
+│   │   ├── sales_calculator.py         # 매출 계산
+│   │   ├── accounts_receivable_analyzer.py  # 매출채권 분석
+│   │   └── processed_receivables_analyzer.py # 매출채권 처리
+│   ├── 📁 data/              # 데이터 처리
+│   │   ├── 📁 processors/    # 데이터 가공
+│   │   └── unified_data_collector.py   # 통합 데이터 수집
+│   ├── 📁 reports/           # 보고서 생성
+│   │   └── xml_safe_report_generator.py # 안전 보고서 생성
+│   ├── 📁 gui/               # GUI 컴포넌트
+│   │   └── login_dialog.py   # 로그인 처리
+│   └── 📁 utils/             # 유틸리티
+│       └── config_manager.py # 설정 관리
+├── 📁 data/                  # 데이터 저장소
+│   ├── 📁 raw/               # 원시 데이터
+│   ├── 📁 processed/         # 처리된 데이터
+│   └── 📁 report/            # 최종 보고서
+└── 📄 2025년도 주간보고 양식_2.xlsx  # 보고서 템플릿
 ```
 
-## 🚀 사용 방법
+## 🚀 **빠른 시작**
 
-### 1. GUI 모드 (권장)
+### 1. **설치**
 ```bash
+git clone https://github.com/dklee801/sales-department-weekly-report.git
 cd sales-department-weekly-report
+pip install -r requirements.txt
+```
+
+### 2. **GUI 실행** (권장)
+```bash
 python applications/gui.py
 ```
-또는
-```bash
-python applications/run_gui.py
-```
 
-### 2. CLI 모드
+### 3. **CLI 실행**
 ```bash
-cd sales-department-weekly-report
+# 전체 프로세스 (매출 + 매출채권 + 보고서)
 python applications/main.py
+
+# 매출 데이터만 분석
+python applications/main.py --process
+
+# 보고서만 생성
+python applications/main.py --report
+
+# 6개월 데이터로 전체 프로세스
+python applications/main.py --months 6
 ```
 
-### 3. 통합 테스트
+## 🎯 **사용 시나리오**
+
+### 📈 **시나리오 1: 주간 정기 보고서**
+1. **GUI 실행** → ERP 계정 입력
+2. **보고서 주간 선택** → 목요일 기준 선택
+3. **🚀 전체 프로세스 실행** → 자동 완성 (5-10분)
+4. **결과 확인** → `data/report/주간보고서_YYYYMMDD_HHMM.xlsx`
+
+### 💰 **시나리오 2: 매출채권 분석만**
+1. **GUI 실행** → 보고서 주간 선택
+2. **💰 매출채권 분석** → 선택된 주간 기준 분석
+3. **결과 확인** → `data/processed/채권_분석_결과.xlsx`
+
+### 📊 **시나리오 3: 매출 데이터 수집**
+1. **매출 수집 기간 선택** (1-24개월)
+2. **📈 매출 데이터 갱신** → 원시 데이터 수집
+3. **🔄 매출집계 처리** → 분석용 데이터 생성
+
+## ⚙️ **설정 및 환경**
+
+### 🔧 **필수 요구사항**
+- **Python**: 3.8 이상
+- **Chrome/Edge**: 웹드라이버 자동 설치
+- **Windows**: 10/11 (테스트 완료)
+- **네트워크**: ERP 시스템 접근 권한
+
+### 📂 **디렉토리 구조**
 ```bash
-python test_integration.py
+# 데이터 디렉토리 자동 생성
+data/
+├── raw/                    # 원시 데이터 (수집된 파일들)
+│   ├── sales/             # 매출 원시 데이터
+│   └── receivables/       # 매출채권 원시 데이터
+├── processed/             # 처리된 중간 결과
+│   ├── 매출집계_결과.xlsx
+│   └── 채권_분석_결과.xlsx
+└── report/                # 최종 보고서
+    └── 주간보고서_YYYYMMDD_HHMM.xlsx
 ```
 
-## 🔧 기능 소개
+## 🛠️ **고급 사용법**
 
-### 📈 매출 데이터 관리
-- **자동 수집**: ERP 시스템에서 매출 데이터 자동 다운로드
-- **데이터 검증**: 수집된 데이터의 무결성 검사
-- **집계 처리**: 월별/주차별 매출 집계 생성
-
-### 💰 매출채권 분석
-- **채권 현황 분석**: 회사별 매출채권 상태 분석
-- **기간별 분류**: 90일 초과 채권, 결제기간 초과 채권 분류
-- **자동 보고서**: Excel 형태의 분석 보고서 생성
-
-### 📄 주간보고서 생성
-- **표준 양식**: 2025년도 주간보고 양식에 맞춘 자동 생성
-- **데이터 통합**: 매출 및 매출채권 데이터를 하나의 보고서로 통합
-- **XML 안전**: 특수문자 처리로 Excel 호환성 보장
-
-## 🎯 리팩토링 전후 비교
-
-### ❌ 리팩토링 전 (기존 구조)
-- 단일 파일에 모든 기능 집중
-- 복잡한 의존성 관계
-- 코드 재사용 어려움
-- 유지보수 시 전체 시스템 영향
-
-### ✅ 리팩토링 후 (새 구조)
-- **모듈별 독립성**: 각 모듈이 독립적으로 작동
-- **명확한 인터페이스**: 모듈 간 표준화된 통신 방식
-- **확장 가능성**: 새로운 기능 추가 시 기존 코드에 영향 없음
-- **테스트 용이성**: 개별 모듈 단위 테스트 가능
-
-## 📦 필요한 패키지
-
+### 🎛️ **CLI 옵션**
 ```bash
-pip install pandas openpyxl selenium tkinter pathlib logging xlsxwriter
+# 조용한 모드 (최소 출력)
+python applications/main.py --quiet
+
+# 브라우저 창 표시 (디버깅)
+python applications/main.py --show-browser
+
+# 매출채권만 분석
+python applications/main.py --collect-receivables
+
+# 도움말
+python applications/main.py --help
 ```
 
-선택적 패키지:
+### 🔧 **설정 파일**
+- **자동 생성**: 첫 실행 시 자동으로 설정 파일 생성
+- **경로 설정**: 데이터 저장 경로 사용자 정의 가능
+- **계정 관리**: ERP 계정 정보 안전 저장
+
+## 📋 **주요 개선사항 (v4.0)**
+
+### 🏗️ **아키텍처 리팩토링**
+- ✅ **모듈화 완료**: 기능별 독립 모듈 분리
+- ✅ **설정 중앙화**: config_manager를 통한 통합 관리
+- ✅ **표준화된 import**: 일관된 모듈 참조 방식
+- ✅ **백워드 호환성**: 기존 기능 100% 보장
+
+### 🛡️ **안정성 강화**
+- ✅ **오류 격리**: 모듈 간 오류 전파 방지
+- ✅ **자동 복구**: 데이터 오류 자동 감지 및 수정
+- ✅ **병합 셀 처리**: Excel 복잡 구조 안전 처리
+- ✅ **메모리 최적화**: 대용량 데이터 효율 처리
+
+### 🚀 **성능 향상**
+- ✅ **병렬 처리**: 다중 회사 데이터 동시 수집
+- ✅ **지능형 캐싱**: 중복 데이터 처리 최적화
+- ✅ **점진적 로딩**: 필요한 모듈만 동적 로드
+- ✅ **자동 정리**: 임시 파일 자동 정리
+
+## 🐛 **문제해결**
+
+### ❓ **자주 묻는 질문**
+
+**Q: "매출채권 분석 실패" 오류가 발생해요**
+```
+A: 1. 매출채권 파일이 data/raw/receivables/에 있는지 확인
+   2. 파일명이 "매출채권계산결과YYYYMMDD.xlsx" 형식인지 확인
+   3. GUI에서 올바른 보고서 주간을 선택했는지 확인
+```
+
+**Q: GUI가 실행되지 않아요**
+```
+A: 1. pip install -r requirements.txt 실행
+   2. tkinter 설치: sudo apt-get install python3-tk (Linux)
+   3. tkcalendar 설치: pip install tkcalendar
+```
+
+**Q: 브라우저가 자동으로 닫혀요**
+```
+A: 1. Chrome/Edge 최신 버전 확인
+   2. --show-browser 옵션으로 디버깅 모드 실행
+   3. 방화벽/보안 프로그램 확인
+```
+
+### 🔍 **로그 확인**
 ```bash
-pip install tkcalendar  # 달력 위젯 (GUI 개선)
+# 상세 로그 확인
+python applications/main.py --show-browser
+
+# GUI 오류 확인
+python applications/gui.py  # 콘솔에서 실행
 ```
 
-## 🏃‍♂️ 빠른 시작
+## 📞 **지원 및 문의**
 
-1. **프로젝트 복제**
-   ```bash
-   git clone https://github.com/dklee801/sales-department-weekly-report.git
-   cd sales-department-weekly-report
-   ```
+- **GitHub Issues**: [이슈 등록](https://github.com/dklee801/sales-department-weekly-report/issues)
+- **버그 리포트**: 재현 단계와 오류 로그 첨부
+- **기능 요청**: 구체적인 사용 사례와 함께 요청
 
-2. **의존성 설치**
-   ```bash
-   pip install pandas openpyxl selenium tkinter pathlib logging xlsxwriter
-   pip install tkcalendar  # 선택적
-   ```
+## 📄 **라이선스**
 
-3. **GUI 애플리케이션 실행**
-   ```bash
-   python applications/gui.py
-   ```
-
-## 🔍 문제 해결
-
-### 자주 발생하는 문제
-
-1. **ModuleNotFoundError**
-   ```
-   해결: 프로젝트 루트 디렉토리에서 실행하는지 확인
-   cd sales-department-weekly-report
-   python applications/gui.py
-   ```
-
-2. **Import 오류**
-   ```
-   해결: __init__.py 파일들이 모든 디렉토리에 있는지 확인
-   python test_integration.py로 모듈 상태 점검
-   ```
-
-3. **GUI 실행 오류**
-   ```
-   해결: tkinter가 설치되어 있는지 확인
-   python -m tkinter  # 테스트 실행
-   ```
-
-## 📈 성능 개선
-
-### 메모리 사용량
-- **모듈별 로딩**: 필요한 모듈만 선택적 로딩
-- **의존성 최적화**: 불필요한 import 제거
-
-### 실행 속도
-- **지연 로딩**: 사용 시점에 모듈 로딩
-- **캐시 활용**: 중복 계산 방지
-
-## 🎯 향후 계획
-
-### Phase 1: 안정화 (완료)
-- ✅ 모듈 구조 리팩토링
-- ✅ Import 경로 표준화
-- ✅ 기본 기능 검증
-
-### Phase 2: 확장 (예정)
-- 📋 플러그인 시스템 도입
-- 📋 웹 인터페이스 추가
-- 📋 API 서버 구축
-
-### Phase 3: 최적화 (예정)
-- 📋 성능 튜닝
-- 📋 대용량 데이터 처리
-- 📋 병렬 처리 지원
-
-## 🤝 기여 방법
-
-1. 새로운 기능은 별도 모듈로 개발
-2. 기존 인터페이스 유지
-3. 단위 테스트 포함
-4. 문서화 완료
-
-## 📞 지원
-
-- **기술 문의**: GitHub Issues
-- **버그 신고**: GitHub Issues
+이 프로젝트는 내부 사용을 위한 프로젝트입니다.
 
 ---
 
-**Sales Department Weekly Report v4.0** - 더 나은 코드, 더 나은 경험을 위해 🚀
+## 🎉 **성공적인 리팩토링 완료!**
+
+**v4.0에서는 완전히 새로운 아키텍처로 재구성되어 더욱 안정적이고 확장 가능한 시스템이 되었습니다.**
+
+✨ **모듈화 → 유지보수성 향상**  
+🛡️ **안정성 → 오류 복구 능력 강화**  
+🚀 **성능 → 처리 속도 대폭 개선**  
+🎯 **사용성 → 더욱 직관적인 인터페이스**
