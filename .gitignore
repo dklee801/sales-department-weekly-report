@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PIPFILE.lock
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+data/processed/backup/
+data/sales_raw_data/
+data/receivable_calculator_raw_data/
+data/downloads/
+data/report/
+*.xlsx
+*.xls
+
+# Logs
+*.log
+logs/
+
+# Config files with sensitive data
+config/accounts.json
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Browser automation
+webdriver/
+chrome_driver/
+geckodriver/
+
+# Backup files
+*_backup*
+*_bak*
+*.backup
