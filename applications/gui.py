@@ -1109,20 +1109,32 @@ class ReportAutomationGUI:
                     )
                     
                     if result:
-                        # 성공 결과 처리
+                        # 성공 결과 처리 - DataFrame 안전 처리
+                        weekly_data = result.get("weekly_data", {})
+                        curr_data = weekly_data.get("금주", {})
+                        prev_data = weekly_data.get("전주", {})
+                        
+                        # DataFrame 또는 dict 안전하게 boolean 변환
+                        def safe_bool_check(data):
+                            if hasattr(data, 'empty'):  # DataFrame인 경우
+                                return not data.empty
+                            elif isinstance(data, dict):  # dict인 경우
+                                return bool(data) and len(data) > 0
+                            else:  # 기타
+                                return bool(data)
+                        
                         success_result = {
                             "success": True,
                             "message": "매출채권 분석 완료",
                             "base_date": result.get("base_date"),
                             "output_path": str(result.get("output_path", "")),
-                            "weekly_data_count": len(result.get("weekly_data", {})),
-                            "has_curr_data": bool(result.get("weekly_data", {}).get("금주", {})),
+                            "weekly_data_count": len(weekly_data),
+                            "has_curr_data": safe_bool_check(curr_data),
                             "source": "정상 양식 매출채권 분석 (원본 로직)"
                         }
                         
                         # 전주 데이터 여부 확인
-                        prev_week_data = result.get("weekly_data", {}).get("전주", {})
-                        success_result["has_prev_data"] = bool(prev_week_data) and len(prev_week_data) > 0
+                        success_result["has_prev_data"] = safe_bool_check(prev_data)
                         
                         self.progress_queue.put(("RECEIVABLES_SYNC_RESULT", success_result))
                     else:
