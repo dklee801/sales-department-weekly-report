@@ -1,0 +1,27 @@
+{
+  "project_name": "sales-department-weekly-report",
+  "github": {
+    "owner": "dklee801",
+    "repo": "sales-department-weekly-report",
+    "auto_commit": true,
+    "auto_sync": true
+  },
+  "local_path": "C:\\Users\\dklee\\Python\\weelky_report\\Sales_department_refactored",
+  "version_control": {
+    "enabled": true,
+    "auto_backup": true,
+    "commit_style": "conventional"
+  },
+  "claude_instructions": {
+    "auto_github_management": true,
+    "description": "Claude should automatically handle GitHub version control for this project without asking",
+    "workflow": [
+      "1. Always commit code changes to GitHub automatically",
+      "2. Use meaningful commit messages with conventional commit format",
+      "3. Enable rollback functionality on request",
+      "4. Sync local and remote repositories seamlessly"
+    ]
+  },
+  "last_updated": "2025-08-20T00:26:47Z",
+  "setup_by": "dklee801"
+}
